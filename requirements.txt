@@ -1,0 +1,1 @@
+Libraries Required: numpy, opencv-python, matplotlib
