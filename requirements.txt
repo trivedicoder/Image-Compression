@@ -1,1 +1,1 @@
-Libraries Required: numpy, opencv-python, matplotlib
+Libraries Required: numpy, opencv-python, matplotlib, scikit-learn
