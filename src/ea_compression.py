@@ -1,5 +1,6 @@
 import numpy as np
 import random
+from metrics import evaluate_metrics
 from skimage.metrics import structural_similarity as ssim
 from skimage.transform import resize
 
