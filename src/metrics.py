@@ -13,7 +13,7 @@ def psnr(a, b):
         return float("inf")
     return 10 * np.log10(255 * 255 / m)
 
-
+# Structural similarity index measure
 def ssim_score(a, b):
 
     return ssim(a, b, data_range=255)
@@ -32,7 +32,8 @@ mse_value = mean_squared_error(orig, upscaled)
 psnr_value = peak_signal_noise_ratio(orig, upscaled, data_range=255)
 return ssim_value, mse_value, psnr_value
     
-
+# We implemented image quality evaluation metrics (SSIM, MSE, PSNR) in a standalone module (metrics.py) using scikit-image. 
+# These metrics were integrated into the fitness function of the AI compression algorithm and used to track optimization performance over successive generations.”
 
 
 
