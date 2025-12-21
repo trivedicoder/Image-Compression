@@ -21,19 +21,20 @@ def ssim_score(a, b):
 # This is my section here Dylan.T.Z 
 
 def evaluate_metrics (orig, compress): 
-    upscaled = cv2.resize {
+    upscaled = cv2.resize (
         compress, 
         (orig.shape[1], orig.shape[0]),
         interpolation=cv2.INTER_CUBIC # Interpolation 
-     }
+    )
 
-ssim_value = ssim(orig, upscaled, channel_axis=2)
-mse_value = mean_squared_error(orig, upscaled)
-psnr_value = peak_signal_noise_ratio(orig, upscaled, data_range=255)
-return ssim_value, mse_value, psnr_value
+    ssim_value = ssim(orig, upscaled, channel_axis=2)
+    mse_value = mean_squared_error(orig, upscaled)
+    psnr_value = peak_signal_noise_ratio(orig, upscaled, data_range=255)
+    return ssim_value, mse_value, psnr_value
     
 # We implemented image quality evaluation metrics (SSIM, MSE, PSNR) in a standalone module (metrics.py) using scikit-image. 
 # These metrics were integrated into the fitness function of the AI compression algorithm and used to track optimization performance over successive generations.”
+
 
 
 
