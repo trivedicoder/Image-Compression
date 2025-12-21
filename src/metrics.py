@@ -3,15 +3,15 @@ import cv2
 from skimage.metrics import structural_similarity as ssim
 from skimage.metrics import mean_squared_error, peak_signal_noise_ratio
 
-def mse(a, b):
-    return np.mean((a.astype(float) - b.astype(float)) ** 2)
+#def mse(a, b):
+    #return np.mean((a.astype(float) - b.astype(float)) ** 2)
 
 
-def psnr(a, b):
-    m = mse(a, b)
-    if m == 0:
-        return float("inf")
-    return 10 * np.log10(255 * 255 / m)
+#def psnr(a, b):
+    #m = mse(a, b)
+    #if m == 0:
+        ##return float("inf")
+#return 10 * np.log10(255 * 255 / m)
 
 # Structural similarity index measure
 def ssim_score(a, b):
@@ -37,6 +37,7 @@ def evaluate_metrics (orig, compress):
 
 #We used SSIM as the primary fitness function because it better reflects perceptual image quality. 
 #MSE and PSNR were computed alongside SSIM for evaluation and baseline comparison but were not used directly in the optimization objective
+
 
 
 
