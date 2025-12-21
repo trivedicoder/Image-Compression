@@ -8,7 +8,7 @@ from skimage.transform import resize
 # --------------------
 # SIMPLE COMPRESSION
 # --------------------
-def compress(image, factor=2):
+def compress(image, factor):
     """
     Downsample image by taking every factor-th pixel
     """
