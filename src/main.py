@@ -38,3 +38,23 @@ plt.imshow(best, cmap="gray")
 plt.axis("off")
 
 plt.show()
+
+    # Baseline Comparison # 
+
+# Bilinear baseline reconstruction
+baseline = baseline_reconstruct(compressed, target.shape)
+
+# Compute metrics
+b_ssim, b_mse, b_psnr = evaluate_metrics(target, baseline)
+ea_ssim, ea_mse, ea_psnr = evaluate_metrics(target, best)
+
+# Print results
+print("Bilinear Baseline:")
+print(f"SSIM: {b_ssim:.4f}, MSE: {b_mse:.2f}, PSNR: {b_psnr:.2f}")
+
+print("\nEA Result:")
+print(f"SSIM: {ea_ssim:.4f}, MSE: {ea_mse:.2f}, PSNR: {ea_psnr:.2f}")
+
+# Visualization #
+show(target, baseline, best)
+plot(history)
