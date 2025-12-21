@@ -19,6 +19,7 @@ best, history = evolve(target, compressed)
 #ssim_value, mse_value, psnr_value = evaluate_metrics(target, candidate)
 #fitness = ssim_value
 #history.append(ssim_value)
+#metrics evaluation code in main.py would take the SSIM fitness value and story that in history, for our visualization code to use. IDK maybe it's more efficent 
 
 
 # SHOW RESULT
