@@ -35,6 +35,8 @@ def evaluate_metrics (orig, compress):
 # We implemented image quality evaluation metrics (SSIM, MSE, PSNR) in a standalone module (metrics.py) using scikit-image. 
 # These metrics were integrated into the fitness function of the AI compression algorithm and used to track optimization performance over successive generations.”
 
+#We used SSIM as the primary fitness function because it better reflects perceptual image quality. 
+#MSE and PSNR were computed alongside SSIM for evaluation and baseline comparison but were not used directly in the optimization objective
 
 
 
