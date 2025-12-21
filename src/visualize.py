@@ -1,48 +1,22 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 
-def show(target, baseline, best):
-    plt.figure(figsize=(9, 3))
+
+def show(original,baseline, ga):
+    plt.figure(figsize=(10, 4))
 
     plt.subplot(1, 3, 1)
-    plt.title("Target")
-    plt.imshow(target, cmap="gray")
+    plt.title("Original")
+    plt.imshow(original)
     plt.axis("off")
 
     plt.subplot(1, 3, 2)
     plt.title("Baseline")
-    plt.imshow(baseline, cmap="gray")
+    plt.imshow(baseline)
     plt.axis("off")
 
     plt.subplot(1, 3, 3)
-    plt.title("EA Result")
-    plt.imshow(best, cmap="gray")
+    plt.title("GA Compressed")
+    plt.imshow(ga)
     plt.axis("off")
 
     plt.show()
-
-
-#def plot(history):
-    #plt.plot(history)
-    #plt.xlabel("Generation")
-    #plt.ylabel("SSIM")
-    #plt.show()
-
-def plot(history):
-    plt.plot(history)
-    plt.xlabel("Generation")
-    plt.ylabel("SSIM")
-    plt.title("SSIM Over Generations")
-    plt.savefig("figures/ssim_plot.png")
-    plt.show()
-
-# This is plot ssim # 
-#def plot_ssim(csv_path): 
-    #df = pd.read_csv(csv_path)
-    #plt.plot(df["generation"], df["ssim"])
-    #plt.xlabel("Generation")
-    #plt.ylabel("SSIM")
-    #plt.title("SSIM Over Generations")
-    #plt.savefig("figures/ssim_plot.png")
-
-

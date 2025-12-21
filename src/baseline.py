@@ -1,15 +1,12 @@
-import numpy as np
 from skimage.transform import resize
+import numpy as np
 
 
-def baseline_reconstruct(compressed, original_shape):
-    """
-    Baseline = resize compressed image back to original size
-    """
-    rec = resize(
-        compressed,
-        original_shape,
+def baseline_resize(original):
+    small = resize(
+        original,
+        (120, 200, 3),
         preserve_range=True,
         anti_aliasing=False
     )
-    return rec.astype(np.uint8)
+    return small.astype(np.uint8)

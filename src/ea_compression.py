@@ -1,75 +1,135 @@
 import numpy as np
 import random
-from metrics import evaluate_metrics
-from skimage.metrics import structural_similarity as ssim
 from skimage.transform import resize
+from metrics import ssim_score
 
 
-# --------------------
-# SIMPLE COMPRESSION
-# --------------------
-def compress(image, factor):
+# ============================
+# PARAMETERS (from PDF)
+# ============================
+COMP_W = 200  # Compressed width
+COMP_H = 120  # Compressed height
+BLOCK = 5     # Block size
+BX = COMP_W // BLOCK  # Blocks in x
+BY = COMP_H // BLOCK  # Blocks in y
+GENES = BX * BY * 3   # Total genes in chromosome
+
+
+# ============================
+# CHROMOSOME → IMAGE
+# ============================
+def decode(chrom):
     """
-    Downsample image by taking every factor-th pixel
+    Convert chromosome to compressed image
     """
-    return image[::factor, ::factor]
+    small = np.zeros((COMP_H, COMP_W, 3), dtype=np.uint8)
+
+    idx = 0
+    for y in range(BY):
+        for x in range(BX):
+            r = chrom[idx]
+            g = chrom[idx + 1]
+            b = chrom[idx + 2]
+            small[
+                y*BLOCK:(y+1)*BLOCK,
+                x*BLOCK:(x+1)*BLOCK
+            ] = [r, g, b]
+            idx += 3
+
+    return small
 
 
-# --------------------
-# BASELINE
-# --------------------
-def baseline_reconstruct(compressed, original_shape):
-    return resize(
+# ============================
+# FITNESS (SSIM)
+# ============================
+def fitness(chrom, original):
+    """
+    Fitness function: SSIM between original and reconstructed image
+    """
+    compressed = decode(chrom)
+    reconstructed = resize(
         compressed,
-        original_shape,
+        original.shape,
         preserve_range=True,
         anti_aliasing=False
     ).astype(np.uint8)
 
-
-# --------------------
-# MUTATION
-# --------------------
-def mutate(image, rate=0.02):
-    out = image.copy()
-    h, w = out.shape
-
-    for i in range(h):
-        for j in range(w):
-            if random.random() < rate:
-                out[i, j] = random.randint(0, 255)
-
-    return out
+    return ssim_score(original, reconstructed)
 
 
-# --------------------
-# EVOLUTION
-# --------------------
-def evolve(target, compressed, generations=30, pop_size=20):
-    baseline = baseline_reconstruct(compressed, target.shape)
+# ============================
+# INITIAL POPULATION
+# ============================
+def init_population(original, pop_size):
+    """
+    Start population near block-average image
+    """
+    # Downsample original image
+    small = resize(
+        original,
+        (COMP_H, COMP_W, 3),
+        preserve_range=True,
+        anti_aliasing=False
+    ).astype(np.uint8)
 
-    population = [mutate(baseline, 0.01) for _ in range(pop_size)]
-    history = []
+    # Build base chromosome
+    base = []
+    for by in range(BY):
+        for bx in range(BX):
+            block = small[
+                by*BLOCK:(by+1)*BLOCK,
+                bx*BLOCK:(bx+1)*BLOCK
+            ]
+            r = int(np.mean(block[:, :, 0]))
+            g = int(np.mean(block[:, :, 1]))
+            b = int(np.mean(block[:, :, 2]))
+            base.extend([r, g, b])
+    base = np.array(base, dtype=np.uint8)
 
-    for g in range(generations):
-        scores = [
-            ssim(ind, target, data_range=255)
-            for ind in population
-        ]
+    # Create population with small noise
+    population = []
+    for _ in range(pop_size):
+        individual = base + np.random.randint(-5, 6, size=GENES)
+        individual = np.clip(individual, 0, 255)
+        population.append(individual.astype(np.uint8))
+    return population
 
-        best_index = scores.index(max(scores))
-        best = population[best_index]
-        history.append(scores[best_index])
 
-        print(f"Gen {g+1}: SSIM = {scores[best_index]:.4f}")
+# ============================
+# GENETIC ALGORITHM
+# ============================
+def evolve(original, generations=50, pop_size=30, mutation_rate=0.01):
+    population = init_population(original, pop_size)
 
-        new_population = [best]  # elitism
+    for gen in range(generations):
+        # Evaluate fitness
+        scores = [fitness(ind, original) for ind in population]
 
+        # Select best individuals
+        sorted_indices = np.argsort(scores)[::-1]
+        population = [population[i] for i in sorted_indices[:pop_size//2]]
+
+        # Create new individuals through crossover and mutation
+        new_population = population.copy()
         while len(new_population) < pop_size:
-            parent = random.choice(population)
-            child = mutate(parent)
-            new_population.append(child)
+            parent1, parent2 = random.sample(population, 2)
+            crossover_point = random.randint(0, GENES - 1)
+            child = np.concatenate((parent1[:crossover_point], parent2[crossover_point:]))
+
+            # Mutation
+            for i in range(GENES):
+                if random.random() < mutation_rate:
+                    child[i] = random.randint(0, 255)
+
+            new_population.append(child.astype(np.uint8))
 
         population = new_population
 
-    return best, history
+        # Print best score of the generation
+        best_score = max(scores)
+        print(f"Generation {gen + 1}: Best SSIM = {best_score:.4f}")
+
+    # Return the best individual from the final population
+    final_scores = [fitness(ind, original) for ind in population]
+    best_index = np.argmax(final_scores)
+    return decode(population[best_index])
