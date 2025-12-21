@@ -22,10 +22,18 @@ def show(target, baseline, best):
     plt.show()
 
 
+#def plot(history):
+    #plt.plot(history)
+    #plt.xlabel("Generation")
+    #plt.ylabel("SSIM")
+    #plt.show()
+
 def plot(history):
     plt.plot(history)
     plt.xlabel("Generation")
     plt.ylabel("SSIM")
+    plt.title("SSIM Over Generations")
+    plt.savefig("figures/ssim_plot.png")
     plt.show()
 
 # This is plot ssim # 
@@ -36,4 +44,5 @@ def plot(history):
     #plt.ylabel("SSIM")
     #plt.title("SSIM Over Generations")
     #plt.savefig("figures/ssim_plot.png")
+
 
