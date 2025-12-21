@@ -14,6 +14,13 @@ compressed = compress(target)
 # EVOLVE
 best, history = evolve(target, compressed)
 
+# from metrics import evaluate_metrics
+
+#ssim_value, mse_value, psnr_value = evaluate_metrics(target, candidate)
+#fitness = ssim_value
+#history.append(ssim_value)
+
+
 # SHOW RESULT
 import matplotlib.pyplot as plt
 
