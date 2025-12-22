@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 from PIL import Image
 from ea_compression import evolve
@@ -8,6 +7,7 @@ from baseline import baseline_resize
 from visualize import show, plot
 
 from gui import pick_images, choose_compression
+import os
 
 
 def load_image(path):
@@ -30,6 +30,15 @@ def main():
         print("Selection failed, quitting program")
         return
 
+    # create directories to save results
+    project_root = os.path.dirname(os.path.dirname(__file__))
+
+    compressed_dir = os.path.join(project_root, "results", "compressed")
+    plots_dir = os.path.join(project_root, "results", "plots")
+
+    os.makedirs(compressed_dir, exist_ok=True)
+    os.makedirs(plots_dir, exist_ok=True)
+
     # loop through all images selected
     for path in paths:
         print(f"Applying EA to: {path}")
@@ -38,6 +47,16 @@ def main():
 
         # let user pick compression level
         block_size = choose_compression()
+
+        # get image file name without format (JPG)
+        img_name = os.path.splitext(os.path.basename(path))[0]
+
+        # generate some file names and paths
+        comparison_path = os.path.join(
+            compressed_dir, f"{img_name}_comparison.png")
+        plot_path = os.path.join(plots_dir, f"{img_name}_ssim.png")
+        metrics_path = os.path.join(
+            project_root, "results", f"{img_name}_metrics.txt")
 
         ga, history = evolve(original, block_size=block_size)
 
@@ -55,12 +74,21 @@ def main():
         print("\nEA Result:")
         print(f"SSIM: {ea_ssim:.4f}, MSE: {ea_mse:.2f}, PSNR: {ea_psnr:.2f}")
 
+        # save metrics to a text file
+        with open(metrics_path, "w") as f:
+            f.write("Bilinear Baseline:\n")
+            f.write(
+                f"SSIM: {b_ssim:.4f}, MSE: {b_mse:.2f}, PSNR: {b_psnr:.2f}\n\n")
+            f.write("EA Result:\n")
+            f.write(
+                f"SSIM: {ea_ssim:.4f}, MSE: {ea_mse:.2f}, PSNR: {ea_psnr:.2f}\n")
+
         print("Printing is done")
 
         # Visualization
-        show(original, baseline, ga)
+        show(original, baseline, ga, save_path=comparison_path)
         print("Plot is done")
-        plot(history)
+        plot(history, save_path=plot_path)
 
 
 # run script

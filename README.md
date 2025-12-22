@@ -46,6 +46,8 @@ python src/main.py
 3) After that, the evolutionary algorithm will run on each selected image.
 4) Results are printed to the console.
 5) Output images and plots are displayed.
+6) Results are saved to results directory.
+    - Running an image more than one time will result in previous results for that image being replaced.
 
 ## File Structure
 

@@ -2,9 +2,10 @@ import os
 import matplotlib.pyplot as plt
 
 
-def show(original, baseline, ga):
+def show(original, baseline, ga, save_path=None):
     """
-    Function that displays the original image, baseline compressed image, and our GA compressed image.
+    Function that show the original image, baseline compressed image, and our GA compressed image.
+    If a save_path is given, save the comparison there.
     """
     plt.figure(figsize=(10, 4))
 
@@ -23,21 +24,30 @@ def show(original, baseline, ga):
     plt.imshow(ga)
     plt.axis("off")
 
+    # save figure
+    if save_path:
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        plt.savefig(save_path)
+
     plt.show()
+    plt.close()
 
 
-def plot(history):
+def plot(history, save_path=None):
     """
-    Function that creates a chart saves it to figures.
+    Function that plots SSIM history.
+    If a save_path is given, save the comparison there.
     """
 
-    # Creating a NEW chart in the NEW folder CALLED "figures" to track the SSIM
-    os.makedirs("figures", exist_ok=True)
-
+    plt.figure()
     plt.plot(history)
     plt.xlabel("Generation")
     plt.ylabel("SSIM")
     plt.title("SSIM Over Generations")
-    plt.savefig("figures/ssim_plot.png")
+
+    if save_path:
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        plt.savefig(save_path)
 
     plt.show()
+    plt.close()
