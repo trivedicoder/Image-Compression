@@ -42,6 +42,7 @@ python src/main.py
 5) Output images and plots are displayed.
 
 ## File Structure
+'''
 Image-Compression/
 │
 ├── images/
@@ -61,3 +62,4 @@ Image-Compression/
 │
 ├── README.md              # Project documentation
 ├── .gitignore
+'''
