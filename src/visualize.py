@@ -1,3 +1,4 @@
+import os
 import matplotlib.pyplot as plt
 
 
@@ -20,6 +21,18 @@ def show(original,baseline, ga):
     plt.axis("off")
 
     plt.show()
+
+def plot(history):
+    os.makedirs("figures", exist_ok=True)# Creating a chart to track the SSIM
+   
+    plt.plot(history)
+    plt.xlabel("Generation")
+    plt.ylabel("SSIM")
+    plt.title("SSIM Over Generations")
+    plt.savefig("figures/ssim_plot.png")
+    
+    plt.show()
+
 
 
     #Lol
