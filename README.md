@@ -42,7 +42,7 @@ python src/main.py
 5) Output images and plots are displayed.
 
 ## File Structure
-'''
+''' bash
 Image-Compression/
 │
 ├── images/
