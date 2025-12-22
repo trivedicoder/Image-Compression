@@ -88,7 +88,7 @@ def init_population(original, pop_size, block_size, bx, by, genes):
 # ============================
 # GENETIC ALGORITHM
 # ============================
-def evolve(original, generations=5, pop_size=30, mutation_rate=0.01, block_size=4):
+def evolve(original, generations=50, pop_size=30, mutation_rate=0.01, block_size=4):
     """
     Implementation of our Genetic Algorithm.
     """
