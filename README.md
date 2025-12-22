@@ -11,8 +11,10 @@ representation to increase visual similarity as much as possible after reconstru
 
 run the following commands on the terminal:
 
-1) git clone https://github.com/trivedicoder/Image-Compression.git
-2) cd Image-Compression 
+``` powershell
+git clone https://github.com/trivedicoder/Image-Compression.git
+cd Image-Compression 
+```
 
 ##  Dependencies and requirements
 
@@ -26,13 +28,17 @@ required libraries:
 
 to install libraries, just run the following command on the terminal:
 
+``` powershell
 pip install numpy pillow matplotlib scikit-image opencv-python
+``` 
 
 ## How to run the code
 
 Assuming you are in the project's root directory, run this command on terminal:
 
+``` powershell
 python src/main.py
+```
 
 1) A GUI will open and let you select image files (multiple files supported).
 2) After selecting images, another GUI will open and you will be asked to select a compression rate (low, medium, or high).
@@ -42,7 +48,8 @@ python src/main.py
 5) Output images and plots are displayed.
 
 ## File Structure
-''' bash
+
+``` powershell
 Image-Compression/
 │
 ├── images/
@@ -62,4 +69,4 @@ Image-Compression/
 │
 ├── README.md              # Project documentation
 ├── .gitignore
-'''
+```
