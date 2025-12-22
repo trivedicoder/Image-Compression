@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 def show(original, baseline, ga):
     """
-    Function that displays the original image, baseline compressed image, and our GA compressed image
+    Function that displays the original image, baseline compressed image, and our GA compressed image.
     """
     plt.figure(figsize=(10, 4))
 
@@ -28,7 +28,7 @@ def show(original, baseline, ga):
 
 def plot(history):
     """
-    Function that creates a chart saves it to figures
+    Function that creates a chart saves it to figures.
     """
 
     # Creating a NEW chart in the NEW folder CALLED "figures" to track the SSIM

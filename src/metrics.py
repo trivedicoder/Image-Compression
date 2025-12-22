@@ -6,7 +6,7 @@ from skimage.metrics import mean_squared_error, peak_signal_noise_ratio
 
 def ssim_score(a, b):
     """
-    Compute Structural similarity index measure (SSIM) score
+    Compute Structural similarity index measure (SSIM) score.
     """
     return ssim(a, b, channel_axis=2, data_range=255)
 

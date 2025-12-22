@@ -4,7 +4,7 @@ import numpy as np
 
 def baseline_resize(original):
     """
-    Function to resize original image into a smaller image
+    Function to resize original image into a smaller image.
     """
 
     small = resize(

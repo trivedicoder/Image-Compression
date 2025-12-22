@@ -20,6 +20,9 @@ GENES = BX * BY * 3
 # DECODE CHROMOSOME → IMAGE
 # ============================
 def decode(chrom):
+    """
+    Helper for fitness function. Actual decoding logic.
+    """
     img = np.zeros((COMP_H, COMP_W, 3), dtype=np.uint8)
     idx = 0
 
@@ -38,6 +41,9 @@ def decode(chrom):
 # FITNESS FUNCTION (SSIM)
 # ============================
 def fitness(chrom, original):
+    """
+    Fitness function that decodes a chromosome into a picture and evaluates its fitness.
+    """
     compressed = decode(chrom)
 
     reconstructed = resize(
@@ -54,6 +60,9 @@ def fitness(chrom, original):
 # INITIAL POPULATION
 # ============================
 def init_population(original, pop_size):
+    """
+    Function that creates an initial population.
+    """
     small = resize(
         original,
         (COMP_H, COMP_W, 3),
@@ -85,6 +94,9 @@ def init_population(original, pop_size):
 # GENETIC ALGORITHM
 # ============================
 def evolve(original, generations=50, pop_size=30, mutation_rate=0.01):
+    """
+    Implementation of our Genetic Algorithm.
+    """
     population = init_population(original, pop_size)
     history = []
 

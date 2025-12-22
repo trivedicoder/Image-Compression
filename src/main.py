@@ -12,7 +12,7 @@ from gui import pick_images
 
 def load_image(path):
     """
-    Load single image from a given file path
+    Load single image from a given file path.
     """
 
     img = Image.open(path).convert("RGB")
@@ -21,7 +21,7 @@ def load_image(path):
 
 def main():
     """
-    Main script that implements all core parts of the code
+    Main script that implements all core parts of the code.
     """
 
     # get images and check for selection
