@@ -9,28 +9,23 @@ from metrics import ssim_score
 # ============================
 COMP_W = 200
 COMP_H = 120
-BLOCK = 5
-
-BX = COMP_W // BLOCK
-BY = COMP_H // BLOCK
-GENES = BX * BY * 3
 
 
 # ============================
 # DECODE CHROMOSOME → IMAGE
 # ============================
-def decode(chrom):
+def decode(chrom, block_size, bx, by):
     """
     Helper for fitness function. Actual decoding logic.
     """
     img = np.zeros((COMP_H, COMP_W, 3), dtype=np.uint8)
     idx = 0
 
-    for y in range(BY):
-        for x in range(BX):
+    for y in range(by):
+        for x in range(bx):
             img[
-                y*BLOCK:(y+1)*BLOCK,
-                x*BLOCK:(x+1)*BLOCK
+                y*block_size:(y+1)*block_size,
+                x*block_size:(x+1)*block_size
             ] = chrom[idx:idx+3]
             idx += 3
 
@@ -40,11 +35,11 @@ def decode(chrom):
 # ============================
 # FITNESS FUNCTION (SSIM)
 # ============================
-def fitness(chrom, original):
+def fitness(chrom, original, block_size, bx, by):
     """
     Fitness function that decodes a chromosome into a picture and evaluates its fitness.
     """
-    compressed = decode(chrom)
+    compressed = decode(chrom, block_size, bx, by)
 
     reconstructed = resize(
         compressed,
@@ -59,7 +54,7 @@ def fitness(chrom, original):
 # ============================
 # INITIAL POPULATION
 # ============================
-def init_population(original, pop_size):
+def init_population(original, pop_size, block_size, bx, by, genes):
     """
     Function that creates an initial population.
     """
@@ -71,11 +66,11 @@ def init_population(original, pop_size):
     ).astype(np.uint8)
 
     base = []
-    for y in range(BY):
-        for x in range(BX):
+    for y in range(by):
+        for x in range(bx):
             block = small[
-                y*BLOCK:(y+1)*BLOCK,
-                x*BLOCK:(x+1)*BLOCK
+                y*block_size:(y+1)*block_size,
+                x*block_size:(x+1)*block_size
             ]
             base.extend(block.mean(axis=(0, 1)).astype(int))
 
@@ -83,7 +78,7 @@ def init_population(original, pop_size):
 
     population = []
     for _ in range(pop_size):
-        noise = np.random.randint(-5, 6, GENES)
+        noise = np.random.randint(-5, 6, genes)
         individual = np.clip(base + noise, 0, 255)
         population.append(individual.astype(np.uint8))
 
@@ -93,15 +88,20 @@ def init_population(original, pop_size):
 # ============================
 # GENETIC ALGORITHM
 # ============================
-def evolve(original, generations=50, pop_size=30, mutation_rate=0.01):
+def evolve(original, generations=5, pop_size=30, mutation_rate=0.01, block_size=4):
     """
     Implementation of our Genetic Algorithm.
     """
-    population = init_population(original, pop_size)
+    bx = COMP_W // block_size
+    by = COMP_H // block_size
+    genes = bx * by * 3
+
+    population = init_population(original, pop_size, block_size, bx, by, genes)
     history = []
 
     for gen in range(generations):
-        scores = [fitness(ind, original) for ind in population]
+        scores = [fitness(ind, original, block_size, bx, by)
+                  for ind in population]
 
         # Save best score
         best_score = max(scores)
@@ -117,12 +117,12 @@ def evolve(original, generations=50, pop_size=30, mutation_rate=0.01):
         new_population = survivors.copy()
         while len(new_population) < pop_size:
             p1, p2 = random.sample(survivors, 2)
-            cp = random.randint(0, GENES - 1)
+            cp = random.randint(0, genes - 1)
 
             child = np.concatenate((p1[:cp], p2[cp:]))
 
             # Mutation
-            for i in range(GENES):
+            for i in range(genes):
                 if random.random() < mutation_rate:
                     child[i] = random.randint(0, 255)
 
@@ -131,7 +131,8 @@ def evolve(original, generations=50, pop_size=30, mutation_rate=0.01):
         population = new_population
 
     # Final best individual
-    final_scores = [fitness(ind, original) for ind in population]
+    final_scores = [fitness(ind, original, block_size, bx, by)
+                    for ind in population]
     best_idx = np.argmax(final_scores)
 
-    return decode(population[best_idx]), history
+    return decode(population[best_idx], block_size, bx, by), history

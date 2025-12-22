@@ -7,7 +7,7 @@ from metrics import evaluate_metrics
 from baseline import baseline_resize
 from visualize import show, plot
 
-from gui import pick_images
+from gui import pick_images, choose_compression
 
 
 def load_image(path):
@@ -36,7 +36,10 @@ def main():
 
         original = load_image(path)
 
-        ga, history = evolve(original)
+        # let user pick compression level
+        block_size = choose_compression()
+
+        ga, history = evolve(original, block_size=block_size)
 
         # Bilinear baseline reconstruction
         baseline = baseline_resize(original)
