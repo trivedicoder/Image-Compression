@@ -9,7 +9,6 @@ def pick_images(multiple: True):
     """
 
     root = tk.Tk()
-    # root.withdraw()  # don't want main window to display
 
     # select multiple images
     if multiple:

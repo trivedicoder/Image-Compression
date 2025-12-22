@@ -4,6 +4,10 @@ from metrics import ssim_score
 
 
 def run(original):
+    """
+
+    """
+
     baseline = baseline_resize(original)
     best, history = evolve(original)
 
@@ -11,5 +15,3 @@ def run(original):
     print("EA SSIM:", ssim_score(best, original))
 
     return baseline, best, history
-
-#Lol

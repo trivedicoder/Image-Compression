@@ -3,6 +3,10 @@ import numpy as np
 
 
 def baseline_resize(original):
+    """
+    Function to resize original image into a smaller image
+    """
+
     small = resize(
         original,
         (120, 200, 3),
@@ -10,5 +14,3 @@ def baseline_resize(original):
         anti_aliasing=False
     )
     return small.astype(np.uint8)
-
-#Lol
