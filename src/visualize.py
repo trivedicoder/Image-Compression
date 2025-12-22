@@ -23,7 +23,7 @@ def show(original,baseline, ga):
     plt.show()
 
 def plot(history):
-    os.makedirs("figures", exist_ok=True)# Creating a chart to track the SSIM
+    os.makedirs("figures", exist_ok=True)# Creating a NEW chart in the NEW folder CALLED "figures" to track the SSIM
    
     plt.plot(history)
     plt.xlabel("Generation")
@@ -35,4 +35,5 @@ def plot(history):
 
 
 
-    #Lol
+    #Lol lmao
+
