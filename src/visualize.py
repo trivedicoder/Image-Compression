@@ -2,7 +2,10 @@ import os
 import matplotlib.pyplot as plt
 
 
-def show(original,baseline, ga):
+def show(original, baseline, ga):
+    """
+    Function that displays the original image, baseline compressed image, and our GA compressed image
+    """
     plt.figure(figsize=(10, 4))
 
     plt.subplot(1, 3, 1)
@@ -22,18 +25,19 @@ def show(original,baseline, ga):
 
     plt.show()
 
+
 def plot(history):
-    os.makedirs("figures", exist_ok=True)# Creating a NEW chart in the NEW folder CALLED "figures" to track the SSIM
-   
+    """
+    Function that creates a chart saves it to figures
+    """
+
+    # Creating a NEW chart in the NEW folder CALLED "figures" to track the SSIM
+    os.makedirs("figures", exist_ok=True)
+
     plt.plot(history)
     plt.xlabel("Generation")
     plt.ylabel("SSIM")
     plt.title("SSIM Over Generations")
     plt.savefig("figures/ssim_plot.png")
-    
+
     plt.show()
-
-
-
-    #Lol lmao
-

@@ -20,6 +20,10 @@ def load_image(path):
 
 
 def main():
+    """
+    Main script that implements all core parts of the code
+    """
+
     # get images and check for selection
     paths = pick_images(multiple=True)
     if not paths:
@@ -56,4 +60,5 @@ def main():
         plot(history)
 
 
+# run script
 main()
