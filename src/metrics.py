@@ -37,3 +37,5 @@ def evaluate_metrics (orig, compress):
 
 #We used SSIM as the primary fitness function because it better reflects perceptual image quality.
 #MSE and PSNR were computed alongside SSIM for evaluation and baseline comparison but were not used directly in the optimization objective
+
+#Lol

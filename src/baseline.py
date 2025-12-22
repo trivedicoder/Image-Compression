@@ -10,3 +10,5 @@ def baseline_resize(original):
         anti_aliasing=False
     )
     return small.astype(np.uint8)
+
+#Lol

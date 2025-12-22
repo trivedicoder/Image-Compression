@@ -133,3 +133,5 @@ def evolve(original, generations=50, pop_size=30, mutation_rate=0.01):
     final_scores = [fitness(ind, original) for ind in population]
     best_index = np.argmax(final_scores)
     return decode(population[best_index])
+
+#lol

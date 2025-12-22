@@ -20,3 +20,6 @@ def show(original,baseline, ga):
     plt.axis("off")
 
     plt.show()
+
+
+    #Lol
