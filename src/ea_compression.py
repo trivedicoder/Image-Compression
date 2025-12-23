@@ -1,3 +1,4 @@
+
 import numpy as np
 import random
 from skimage.transform import resize
@@ -26,7 +27,7 @@ def decode(chrom, block_size, bx, by):
     The decoding process reconstructs a low-resolution image by filling each block with its corresponding RGB gene values.
     """
 
-     # Initialize compressed image
+    # Initialize compressed image
     img = np.zeros((COMP_H, COMP_W, 3), dtype=np.uint8)
     idx = 0 # Pointer 
 
@@ -112,7 +113,7 @@ def init_population(original, pop_size, block_size, bx, by, genes):
 # ============================
 # GENETIC ALGORITHM
 # ============================
-def evolve(original, generations=50, pop_size=30, mutation_rate=0.01, block_size=4):
+def evolve(original, generations=50, pop_size=30, mutation_rate=0.01, block_size=4, progress_callback=None):
     """
     Implementation of our Genetic Algorithm. Evolve compressed image representations. 
     
@@ -135,7 +136,7 @@ def evolve(original, generations=50, pop_size=30, mutation_rate=0.01, block_size
 
     # Evolution loop
     for gen in range(generations):
-        
+
         # Evaluate fitness of population
         scores = [fitness(ind, original, block_size, bx, by)
                   for ind in population]
@@ -145,6 +146,11 @@ def evolve(original, generations=50, pop_size=30, mutation_rate=0.01, block_size
         history.append(best_score)
 
         print(f"Generation {gen + 1}: Best SSIM = {best_score:.4f}")
+
+        # Update progress callback
+        if progress_callback:
+            percent = int((gen + 1) / generations * 100)
+            progress_callback(percent, f"Generation {gen + 1} / {generations}") # Update progress bar
 
         # Selection (keep top 50%)
         sorted_idx = np.argsort(scores)[::-1]

@@ -1,10 +1,9 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
-
+from tkinter import filedialog, messagebox, ttk
 
 def pick_images(multiple: True):
     """
-    Function that implements a GUI (advanced feature 1). This GUI is a file picker. 
+    Function that implements a GUI (advanced feature 1). This GUI is a file picker.
     It supports multiple files, which is also considered an advanced feature.
     """
 
@@ -49,7 +48,7 @@ def pick_images(multiple: True):
 def choose_compression():
     """
     Function that implements another GUI. The GUI allows user to select compression
-    level for each image (low, medium, or high).
+    level for each image (low, medium, or high). Advanced feature 2.
     """
 
     # map levels to block size
@@ -83,3 +82,42 @@ def choose_compression():
 
     root.mainloop()
     return result["block"]
+
+def progresswindow():
+    """
+    Function that implements a GUI (advanced feature 3). This GUI is a progress bar
+    to show the progress of the EA compression.
+    """
+
+    root = tk.Tk()
+    root.title("EA Compression Progress")
+
+    # create progress bar
+    progress_var = tk.DoubleVar(value=0)
+
+    # show label
+    label = tk.Label(root, text="Compressing...")
+    label.pack(pady=5)  # add some padding
+
+# create progress bar
+    bar = ttk.Progressbar(
+        root,
+        variable=progress_var, # link progress_var to the bar
+        maximum=100, #maximum value of the bar
+        length=300 # length of the bar in pixels
+    )
+    bar.pack(padx=20, pady=10)   # add some padding
+
+    status = tk.Label(root, text="Starting...")  # status text
+    status.pack(pady=5)         # add some padding
+
+# function to update progress bar
+    def update_progress(percent, text):
+        progress_var.set(percent)
+        status.config(text=text)
+        root.update()
+# function to close the progress window
+    def close_window():
+        root.destroy()
+
+    return update_progress, close_window

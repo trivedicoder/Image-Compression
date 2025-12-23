@@ -6,7 +6,7 @@ from metrics import evaluate_metrics
 from baseline import baseline_resize
 from visualize import show, plot
 
-from gui import pick_images, choose_compression
+from gui import pick_images, choose_compression, progresswindow
 import os
 
 
@@ -58,7 +58,10 @@ def main():
         metrics_path = os.path.join(
             project_root, "results", f"{img_name}_metrics.txt")
 
-        ga, history = evolve(original, block_size=block_size)
+        update_progress, close_progress = progresswindow()          # create progress bar window
+
+        ga, history = evolve(original, block_size=block_size, progress_callback=update_progress)   # orginal: 100 generations, block_size=4,  progress callback is updating the progress bar
+        close_progress()                    # close the progress bar when done
 
         # Bilinear baseline reconstruction
         baseline = baseline_resize(original)
