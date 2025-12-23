@@ -36,7 +36,7 @@ def show(original, baseline, ga, save_path=None):
 def plot(history, save_path=None):
     """
     Function that plots SSIM history.
-    If a save_path is given, save the comparison there.
+    If a save_path is given, save the comparison there.lol
     """
 
     plt.figure()

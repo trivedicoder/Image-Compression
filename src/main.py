@@ -21,7 +21,7 @@ def load_image(path):
 
 def main():
     """
-    Main script that implements all core parts of the code.
+    Main script that implements all core parts of the code.lol
     """
 
     # get images and check for selection

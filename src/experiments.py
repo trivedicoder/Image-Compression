@@ -11,7 +11,7 @@ def run(original):
     1. Generates a baseline reconstruction using traditional resizing.
     2. Evolves a compressed representation using a genetic algorithm.
     3. Evaluates both approaches using SSIM.
-    4. Returns results for visualization and further analysis.
+    4. Returns results for visualization and further analysis.lolo
     
     """
 

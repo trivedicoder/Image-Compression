@@ -16,7 +16,7 @@ def ssim_score(a, b):
 
 def evaluate_metrics(orig, compress):
     """
-    A function that upscales the compressed image and evaluates image quality using metrics such as SSIM, MSE, and PSNR.
+    A function that upscales the compressed image and evaluates image quality using metrics such as SSIM, MSE, and PSNR.lol
     """
 
     # Upscale image to match original resolution

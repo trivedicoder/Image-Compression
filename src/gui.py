@@ -86,7 +86,7 @@ def choose_compression():
 def progresswindow():
     """
     Function that implements a GUI (advanced feature 3). This GUI is a progress bar
-    to show the progress of the EA compression.
+    to show the progress of the EA compression. lol
     """
 
     root = tk.Tk()

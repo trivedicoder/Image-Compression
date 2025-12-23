@@ -24,7 +24,7 @@ def decode(chrom, block_size, bx, by):
     Decodes a chromosome into a compressed RGB image.
 
     Each chromosome stores average RGB values for fixed-size blocks. 
-    The decoding process reconstructs a low-resolution image by filling each block with its corresponding RGB gene values.
+    The decoding process reconstructs a low-resolution image by filling each block with its corresponding RGB gene values.lol
     """
 
     # Initialize compressed image
