@@ -113,7 +113,7 @@ def init_population(original, pop_size, block_size, bx, by, genes):
 # ============================
 # GENETIC ALGORITHM
 # ============================
-def evolve(original, generations=50, pop_size=30, mutation_rate=0.01, block_size=4, progress_callback=None):
+def evolve(original, generations=100, pop_size=30, mutation_rate=0.01, block_size=4, progress_callback=None):
     """
     Implementation of our Genetic Algorithm. Evolve compressed image representations. 
     
